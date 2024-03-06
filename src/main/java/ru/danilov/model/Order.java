@@ -1,5 +1,6 @@
 package ru.danilov.model;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -12,6 +13,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Entity
 @Table(name = "Orders")
+@JsonView
 public class Order {
     @Id
     @Column(name = "id")

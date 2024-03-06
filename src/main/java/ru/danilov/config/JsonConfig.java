@@ -3,7 +3,6 @@ package ru.danilov.config;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -35,9 +34,11 @@ import java.util.Properties;
 public class JsonConfig implements WebMvcConfigurer {
     private final Environment environment;
 
+
     @Autowired
     public JsonConfig(Environment environment) {
         this.environment = environment;
+
     }
 
     @Override
@@ -46,6 +47,7 @@ public class JsonConfig implements WebMvcConfigurer {
         converter.setObjectMapper(new ObjectMapper().registerModule(new JavaTimeModule()));
         converters.add(converter);
     }
+
 
     @Bean
     public DataSource dataSource() {
@@ -65,11 +67,12 @@ public class JsonConfig implements WebMvcConfigurer {
         properties.put("hibernate.show_sql", environment.getRequiredProperty("hibernate.show_sql"));
         return properties;
     }
+
     @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
         final LocalContainerEntityManagerFactoryBean bean = new LocalContainerEntityManagerFactoryBean();
         bean.setDataSource(dataSource());
-        bean.setPackagesToScan("org.spring.data_jpa.models");
+        bean.setPackagesToScan("ru.danilov.model");
 
         final HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
         bean.setJpaVendorAdapter(vendorAdapter);

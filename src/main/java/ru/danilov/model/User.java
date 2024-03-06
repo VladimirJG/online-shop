@@ -1,5 +1,6 @@
 package ru.danilov.model;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import lombok.AllArgsConstructor;
@@ -15,16 +16,20 @@ import java.util.List;
 @AllArgsConstructor
 @Entity
 @Table(name = "Users")
+@JsonView
 public class User {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @Column(name = "name")
+    @JsonView(Views.UserSummary.class)
     private String name;
     @Column(name = "email")
     @Email
+    @JsonView(Views.UserSummary.class)
     private String email;
     @OneToMany(mappedBy = "owner")
+    @JsonView(Views.UserDetails.class)
     private List<Order> orderList;
 }
